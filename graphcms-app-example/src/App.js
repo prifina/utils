@@ -47,27 +47,38 @@ client
   function LocationDetails() {
     const { loading, error, data } = useQuery(LOCATION_DETAILS);
   
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error :(</p>;
-  
-    return data.locations.map(({ accuracy, coordinates, id, timestamp,  verticalAccuracy  }) => (
-      <div >
-        <p>
-          {accuracy}
-          {coordinates}
-          {id}
-          {timestamp}
-          {verticalAccuracy}
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+
+console.log(data.locations)
+
+    return data.locations.map(({ id, accuracy, coordinates, timestamp,  verticalAccuracy  }) => (
+      <div key={id}>
+         <p style={{fontWeight: "bold"}}>
+          Data Model ID: {id}
+        </p>
+        <p style={{fontaWeight: "bold"}}>
+          Accuracy: {accuracy}
+        </p>
+        <p style={{fontWeight: "bold"}}>
+        Coordinates Details: {JSON.stringify(coordinates)}
+        </p>
+        <p style={{fontWeight: "bold"}}>
+        Timestamp: {timestamp}
+        </p>
+        <p style={{fontWeight: "bold"}}>
+        Vertical Accuracy: {verticalAccuracy}
         </p>
       </div>
     ));
   }
 
+
 function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <h2>My first Apollo app 🚀</h2>
+        <h2>Location Data Model Details: </h2>
         <LocationDetails />
       </div>
     </ApolloProvider>
